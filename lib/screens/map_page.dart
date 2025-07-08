@@ -10,6 +10,13 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text('Weather')));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Weather'),
+      ),
+      body: const Center(  // <-- Εδώ μέσα το Center
+        child: Text('map'),
+      ),
+    );
   }
 }

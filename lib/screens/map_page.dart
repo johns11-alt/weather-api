@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:weather/imports.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -11,7 +10,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   late GoogleMapController mapController;
 
-  const apiKey = 'AIzaSyCqHkKIk7LFJuK7_Cc0rP5isCgGuJG7Bok';
+  final apiKey = 'AIzaSyCqHkKIk7LFJuK7_Cc0rP5isCgGuJG7Bok';
   final LatLng _center = const LatLng(38.246639, 21.734573);
 
   @override

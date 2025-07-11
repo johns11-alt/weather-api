@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:weather/screens/map_page.dart';
+import 'package:weather/imports.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

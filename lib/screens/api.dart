@@ -18,9 +18,20 @@ class _ApiScreenState extends State<ApiScreen> {
     setState(() {
       _isLoading = false;
     });
-    for (var i in apiProvider.apiList) {
-      print('Email: ${i.email}');
+
+    // Print emails and JSON representation for all items
+    for (var item in apiProvider.apiList) {
+      print('Email: ${item.email}');
+      print('As JSON: ${item.toJson()}');
     }
+  }
+
+  void _onItemTap(Api item) {
+    // Convert to JSON and print
+    final jsonMap = item.toJson();
+    print('Selected item as JSON: $jsonMap');
+
+    // You can also do other things here, e.g., send JSON to API, save locally, etc.
   }
 
   @override
@@ -42,20 +53,21 @@ class _ApiScreenState extends State<ApiScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : apiProvider.apiList.isEmpty
-                ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
-                : ListView.builder(
-                    itemCount: apiProvider.apiList.length,
-                    itemBuilder: (context, index) {
-                      final item = apiProvider.apiList[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        child: ListTile(title: Text(item.email)),
-                      );
-                    },
-                  ),
+                    ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
+                    : ListView.builder(
+                        itemCount: apiProvider.apiList.length,
+                        itemBuilder: (context, index) {
+                          final item = apiProvider.apiList[index];
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            child: ListTile(
+                              title: Text(item.email),
+                              onTap: () => _onItemTap(item),
+                            ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),

@@ -19,7 +19,7 @@ class ApiProvider extends ChangeNotifier {
         List<dynamic> listData = json.decode(response.body);
         _apiList.clear();
 
-        // print(listData);
+    
 
         for (int index = 0; index < listData.length; index++) {
           // print(listData[index]['id']);
@@ -28,7 +28,7 @@ class ApiProvider extends ChangeNotifier {
           Api apiItem = Api.fromJson(jsonMap);
           _apiList.add(apiItem);
         }
-        print(_apiList);
+        print('_apiList');
       } else {
         print('Error fetching data man');
       }

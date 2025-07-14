@@ -30,8 +30,4 @@ class Api {
     'body': body
   };
 
-   @override
-  String toString() {
-    return 'Api(id: $id, name: $name, email: $email)';
   }
-}

@@ -1,7 +1,24 @@
 import '../imports.dart';
 
-class ApiScreen extends StatelessWidget {
+class ApiScreen extends StatefulWidget {
   const ApiScreen({super.key});
+
+  @override
+  _ApiScreenState createState() => _ApiScreenState();
+}
+
+class _ApiScreenState extends State<ApiScreen> {
+  bool _isLoading = false;
+
+  Future<void> _fetchData(ApiProvider apiProvider) async {
+    setState(() {
+      _isLoading = true;
+    });
+    await apiProvider.getData(context);
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,30 +28,31 @@ class ApiScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('API Data')),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              apiProvider.getData(context);
-            },
-            child: const Text('Fetch Data'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: () => _fetchData(apiProvider),
+              child: const Text('Fetch Data'),
+            ),
           ),
           Expanded(
-            child: apiProvider.apiList.isEmpty
-                ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
-                : ListView.builder(
-                    itemCount: apiProvider.apiList.length,
-                    itemBuilder: (context, index) {
-                      final item = apiProvider.apiList[index];
-                      return Card(
-                        // margin: const EdgeInsets.all(8),
-                        // child: ListTile(
-                        //   title: Text(item['name'] ?? 'No name'),
-                        //   subtitle: Text(item['email'] ?? 'No email'),
-                        //   isThreeLine: true,
-                        //   trailing: Text(item['id'].toString()),
-                        // ),
-                      );
-                    },
-                  ),
+            child: _isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : apiProvider.apiList.isEmpty
+                    ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
+                    : ListView.builder(
+                        itemCount: apiProvider.apiList.length,
+                        itemBuilder: (context, index) {
+                          final item = apiProvider.apiList[index];
+                          return Card(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            child: ListTile(
+                              title: Text(item.email),
+                            ),
+                          );
+                        },
+                      ),
           ),
         ],
       ),

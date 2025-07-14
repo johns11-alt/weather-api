@@ -18,6 +18,9 @@ class _ApiScreenState extends State<ApiScreen> {
     setState(() {
       _isLoading = false;
     });
+    for (var i in apiProvider.apiList) {
+      print('Email: ${i.email}');
+    }
   }
 
   @override
@@ -39,20 +42,20 @@ class _ApiScreenState extends State<ApiScreen> {
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : apiProvider.apiList.isEmpty
-                    ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
-                    : ListView.builder(
-                        itemCount: apiProvider.apiList.length,
-                        itemBuilder: (context, index) {
-                          final item = apiProvider.apiList[index];
-                          return Card(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
-                            child: ListTile(
-                              title: Text(item.email),
-                            ),
-                          );
-                        },
-                      ),
+                ? Center(child: Text(apiProvider.errorMessage ?? 'No data'))
+                : ListView.builder(
+                    itemCount: apiProvider.apiList.length,
+                    itemBuilder: (context, index) {
+                      final item = apiProvider.apiList[index];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        child: ListTile(title: Text(item.email)),
+                      );
+                    },
+                  ),
           ),
         ],
       ),
